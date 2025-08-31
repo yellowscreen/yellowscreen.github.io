@@ -4,7 +4,7 @@
 <p><input type="text" id="input"></p>
 <p>Username: <input type="text" id="username"></p>
 <script type="module">
-import {joinRoom} from 'https://esm.run/trystero';
+import {joinRoom, selfId} from 'https://esm.run/trystero';
 const room = joinRoom({appId: 'yellowscreen.neocities.org'}, 'testing');
 const [sendMessage, getMessage] = room.makeAction('message');
 const [sendRename, getRename] = room.makeAction('rename');
@@ -22,22 +22,25 @@ function get_name(id) {
 
 room.onPeerJoin(peerId => log(`* ${get_name(peerId)} joined`));
 room.onPeerLeave(peerId => log(`* ${get_name(peerId)} left`));
-getMessage((data, peerId) => { log(`<${peerId}> ${data}`) });
+getMessage((data, peerId) => { log(`<${get_name(peerId)}> ${data}`) });
 
 getRename((data, peerId) => {
 	log(`* ${get_name(peerId)} changed name to ${data}`);
 	names[peerId] = data;
 });
 
-document.getElementById("input").addEventListener('keydown', function(e) {
+document.getElementById("input").addEventListener('keydown', async function(e) {
 	if(e.key === 'Enter') {
-		sendMessage(document.getElementById("input").value);
+		await sendMessage(document.getElementById("input").value);
+		log(`<${get_name(selfId)}> ${data}`);
 		document.getElementById("input").value = "";
 	}
 });
 document.getElementById("username").addEventListener('keydown', function(e) {
 	if(e.key === 'Enter') {
 		sendRename(document.getElementById("username").value);
+		log(`* ${get_name(selfId)} changed name to ${document.getElementById("username").value}`);
+		names[selfId] = document.getElementById("username").value;
 	}
 });
 
