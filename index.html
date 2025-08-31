@@ -1,16 +1,40 @@
 <!DOCTYPE html><html lang="en"><meta charset="utf-8">
 <body>
-<div id="log"></div>
+<pre id="log"></pre>
+<p><input type="text" id="input"></p>
+<p>
+	<button onclick="change_username()">Change username</button>
+	<input type="text">
+</p>
 <script type="module">
 import {joinRoom} from 'https://esm.run/trystero';
 const room = joinRoom({appId: 'yellowscreen.neocities.org'}, 'testing');
-room.onPeerJoin(peerId => console.log(`* ${peerId} joined`));
-room.onPeerLeave(peerId => console.log(`* ${peerId} left`));
-const [sendThing, getThing] = room.makeAction('thing');
-sendThing("pizza");
-getThing((data, peerId) => console.log(`<${peerId}> ${JSON.stringify(data)}`));
+const [sendMessage, getMessage] = room.makeAction('message');
+const [sendRename, getRename] = room.makeAction('rename');
+
+function log(text) {
+	const node = document.createTextNode(text);
+	document.getElementById("log").appendChild(node);
+}
+
+const names = {};
+function get_name(id) {
+	if(id in names) return names[id];
+	return id;
+}
+
+room.onPeerJoin(peerId => log(`* ${get_name(peerId)} joined`));
+room.onPeerLeave(peerId => log(`* ${get_name(peerId)} left`));
+getMessage((data, peerId) => { log(`<${peerId}> ${data}`) });
+
+getRename((data, peerId) => {
+	log(`* ${get_name(peerId)} changed name to ${data}`);
+	names[peerId] = data;
+});
+
 window.joinRoom = joinRoom;
-window.sendThing = sendThing;
+window.sendMessage = sendMessage;
+window.sendRename = sendRename;
 </script>
 <!--<script type="module">
 	import {joinRoom} from 'https://esm.run/trystero';
