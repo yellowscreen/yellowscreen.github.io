@@ -3,15 +3,14 @@
 <div id="log"></div>
 <script type="module">
 import {joinRoom} from 'https://esm.run/trystero';
-window.joinRoom = joinRoom;
-</script>
-<script type="text/javascript">
 const room = joinRoom({appId: 'yellowscreen.neocities.org'}, 'testing');
 room.onPeerJoin(peerId => console.log(`* ${peerId} joined`));
 room.onPeerLeave(peerId => console.log(`* ${peerId} left`));
 const [sendThing, getThing] = room.makeAction('thing');
 sendThing("pizza");
 getThing((data, peerId) => console.log(`<${peerId}> ${JSON.stringify(data)}`));
+window.joinRoom = joinRoom;
+window.sendThing = sendThing;
 </script>
 <!--<script type="module">
 	import {joinRoom} from 'https://esm.run/trystero';
