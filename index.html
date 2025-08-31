@@ -13,4 +13,5 @@ room.onPeerLeave(peerId => console.log(`* ${peerId} left`));
 const [sendThing, getThing] = room.makeAction('thing');
 sendThing("pizza");
 getThing((data, peerId) => console.log(`<${peerId}> ${JSON.stringify(data)}`));
+export { sendThing };
 </script>
