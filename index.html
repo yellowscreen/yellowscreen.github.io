@@ -32,7 +32,7 @@ getRename((data, peerId) => {
 document.getElementById("input").addEventListener('keydown', async function(e) {
 	if(e.key === 'Enter') {
 		await sendMessage(document.getElementById("input").value);
-		log(`<${get_name(selfId)}> ${data}`);
+		log(`<${get_name(selfId)}> ${document.getElementById("input").value}`);
 		document.getElementById("input").value = "";
 	}
 });
@@ -43,6 +43,9 @@ document.getElementById("username").addEventListener('keydown', function(e) {
 		names[selfId] = document.getElementById("username").value;
 	}
 });
+
+log(`* ${selfId} joined`);
+document.getElementById("username").value = selfId;
 
 window.joinRoom = joinRoom;
 window.sendMessage = sendMessage;
