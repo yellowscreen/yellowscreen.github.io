@@ -2,10 +2,7 @@
 <body>
 <pre id="log"></pre>
 <p><input type="text" id="input"></p>
-<p>
-	<button onclick="change_username()">Change username</button>
-	<input type="text">
-</p>
+<p>Username: <input type="text" id="username"></p>
 <script type="module">
 import {joinRoom} from 'https://esm.run/trystero';
 const room = joinRoom({appId: 'yellowscreen.neocities.org'}, 'testing');
@@ -13,7 +10,7 @@ const [sendMessage, getMessage] = room.makeAction('message');
 const [sendRename, getRename] = room.makeAction('rename');
 
 function log(text) {
-	const node = document.createTextNode(text);
+	const node = document.createTextNode(text + '\n');
 	document.getElementById("log").appendChild(node);
 }
 
@@ -30,6 +27,18 @@ getMessage((data, peerId) => { log(`<${peerId}> ${data}`) });
 getRename((data, peerId) => {
 	log(`* ${get_name(peerId)} changed name to ${data}`);
 	names[peerId] = data;
+});
+
+document.getElementById("input").addEventListener('keydown', function(e) {
+	if(e.key === 'Enter') {
+		sendMessage(document.getElementById("input").value);
+		document.getElementById("input").value = "";
+	}
+});
+document.getElementById("username").addEventListener('keydown', function(e) {
+	if(e.key === 'Enter') {
+		sendRename(document.getElementById("username").value);
+	}
 });
 
 window.joinRoom = joinRoom;
