@@ -5,19 +5,19 @@
 import {joinRoom, selfId} from 'https://esm.run/trystero';
 const room = joinRoom({appId: 'yellowscreen.neocities.org'}, 'testing-video');
 
-const peerVideos = {}
-const videoContainer = document.getElementById('videos')
+const peerVideos = {};
+const peerAudios = {};
+const videoContainer = document.getElementById('videos');
 
 const selfStream = await navigator.mediaDevices.getUserMedia({
-  //audio: true,
-  video: true
-})
+  audio: true,
+  video: true});
 
 // send stream to peers currently in the room
-room.addStream(selfStream)
+room.addStream(selfStream);
 
 // send stream to peers who join later
-room.onPeerJoin(peerId => room.addStream(selfStream, peerId))
+room.onPeerJoin(peerId => room.addStream(selfStream, peerId));
 
 room.onPeerStream((stream, peerId) => {
 	let video = peerVideos[peerId];
