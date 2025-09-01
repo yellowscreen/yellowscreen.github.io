@@ -8,6 +8,17 @@ const room = joinRoom({appId: 'yellowscreen.neocities.org'}, 'testing-video');
 const peerVideos = {}
 const videoContainer = document.getElementById('videos')
 
+const selfStream = await navigator.mediaDevices.getUserMedia({
+  //audio: true,
+  video: true
+})
+
+// send stream to peers currently in the room
+room.addStream(selfStream)
+
+// send stream to peers who join later
+room.onPeerJoin(peerId => room.addStream(selfStream, peerId))
+
 room.onPeerStream((stream, peerId) => {
 	let video = peerVideos[peerId];
 
