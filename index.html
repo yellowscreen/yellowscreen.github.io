@@ -51,17 +51,3 @@ window.joinRoom = joinRoom;
 window.sendMessage = sendMessage;
 window.sendRename = sendRename;
 </script>
-<!--<script type="module">
-	import {joinRoom} from 'https://esm.run/trystero';
-/*let log_div = document.getElementById('log');
-function log(text) {
-	log_div.innerHTML += 
-}*/
-const room = joinRoom({appId: 'yellowscreen.neocities.org'}, 'testing');
-room.onPeerJoin(peerId => console.log(`* ${peerId} joined`));
-room.onPeerLeave(peerId => console.log(`* ${peerId} left`));
-const [sendThing, getThing] = room.makeAction('thing');
-sendThing("pizza");
-getThing((data, peerId) => console.log(`<${peerId}> ${JSON.stringify(data)}`));
-export { sendThing };
-</script>-->
