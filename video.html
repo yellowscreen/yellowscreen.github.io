@@ -1,0 +1,26 @@
+<!DOCTYPE html><html lang="en"><meta charset="utf-8">
+<body>
+<div id="videos"></div>
+<script type="module">
+import {joinRoom, selfId} from 'https://esm.run/trystero';
+const room = joinRoom({appId: 'yellowscreen.neocities.org'}, 'testing-video');
+
+const peerVideos = {}
+const videoContainer = document.getElementById('videos')
+
+room.onPeerStream((stream, peerId) => {
+	let video = peerVideos[peerId];
+
+	// if this peer hasn't sent a stream before, create a video element
+	if (!video) {
+		video = document.createElement('video');
+		video.autoplay = true;
+
+		// add video element to the DOM
+		videoContainer.appendChild(video);
+	}
+
+	video.srcObject = stream;
+	peerVideos[peerId] = video;
+})
+</script>
