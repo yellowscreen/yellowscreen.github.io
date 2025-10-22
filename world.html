@@ -115,8 +115,8 @@ var __spreadArrays=this&&this.__spreadArrays||function(){for(var e=0,t=0,r=argum
 </script>
 <script type="module">
 import {joinRoom, selfId} from 'https://esm.run/trystero';
-function net_join(room) {
-	const room = joinRoom({appId: 'yellowscreen.neocities.org'}, 'chatroom-' + room);
+function net_join(room_name) {
+	const room = joinRoom({appId: 'yellowscreen.neocities.org'}, 'chatroom-' + room_name);
 	
 	const ping_timers = Object.create(null);
 	const [sendPing, onGetPing] = room.makeAction('ping');
