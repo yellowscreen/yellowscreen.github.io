@@ -162,7 +162,7 @@ const content = document.getElementById("content");
 let url = new URL(window.location);
 let room = url.searchParams.get("room");
 let role = url.searchParams.get("role");
-if(room === null || (role !== "client" && role !== "host")) {
+if(room === null || (role !== "client" && role !== "server")) {
 	content.innerHTML = `
 		ERROR
 	`;
@@ -182,6 +182,7 @@ if(room === null || (role !== "client" && role !== "host")) {
 		localStorage.setItem("code", window.editor.editor.innerText);
 		net.broadcast(window.editor.editor.innerText);
 	});
+} else {
+	alert(1);
 }
-alert(1);
 </script>
