@@ -107,6 +107,30 @@
     background: #fff;
     opacity: 0.2;
 }
+			body {
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				justify-content: center;
+				font-family: monospace;
+				background: #222;
+			}
+
+			#content {
+				height: 30vh;
+				width: 80%;
+				background: #111;
+				display: block;
+				position: relative;
+				padding: 25px;
+				font-size: 16px;
+				color: #fff;
+			}
 </style>
 <body>
 <div id="content"></div>
@@ -179,6 +203,7 @@ if(room === null || (role !== "client" && role !== "server")) {
 	document.addEventListener('keydown', function(e) {
 		if(!e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
 		if(e.key !== "S") return;
+		e.preventDefault();
 		localStorage.setItem("code", window.editor.editor.innerText);
 		net.broadcast(window.editor.editor.innerText);
 	});
