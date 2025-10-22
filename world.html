@@ -160,8 +160,8 @@ https://github.com/predetermined/oncode
 */
 const content = document.getElementById("content");
 let url = new URL(window.location);
-let room = url.searchParameters.get("room");
-let role = url.searchParameters.get("role");
+let room = url.searchParams.get("room");
+let role = url.searchParams.get("role");
 if(room === null || (role !== "client" && role !== "host")) {
 	content.innerHTML = `
 		ERROR
