@@ -193,18 +193,21 @@ if(room === null || (role !== "client" && role !== "server")) {
 } else if(role === "client") {
 	window.net = net_join(room);
 	net.setonrecv(function(e) {
+		console.log("receive", e.data);
 		content.innerHTML = '<pre>' + escapeHTML(e.data) + '</pre>';
 	});
 } else if(role === "server") {
 	window.editor = new OnCode(content, "js");
 	window.editor.editor.innerHTML = escapeHTML(localStorage.getItem("code") || "");
 	window.net = net_join(room);
+	console.log("broadcast", window.editor.editor.innerText);
 	net.broadcast(window.editor.editor.innerText);
 	document.addEventListener('keydown', function(e) {
 		if(!e.ctrlKey || e.metaKey || !e.shiftKey || e.altKey) return;
 		if(e.key !== "F") return;
 		e.preventDefault();
 		localStorage.setItem("code", window.editor.editor.innerText);
+		console.log("broadcast", window.editor.editor.innerText);
 		net.broadcast(window.editor.editor.innerText);
 	});
 } else {
